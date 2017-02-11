@@ -2,7 +2,10 @@ d>
     <script src="components/jquery/jquery.min.js"></script>
     <script src="components/must/must.js"></script>
     <script>
+      var count = 0;
       must.Rsvps(function(rsvp) {
+        count++;
+        console.log(count);
         $('#rsvps').prepend(
           '<tr><td>' + rsvp.member.member_name +
           '</td><td>' + rsvp.group.group_name +
