@@ -3,6 +3,8 @@
   <head>
     <script src="components/jquery/jquery.min.js"></script>
     <script src="components/must/must.js"></script>
+    <script type="text/javascript" src="https://pubnub.github.io/eon/v/eon/1.0.0/eon.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://pubnub.github.io/eon/v/eon/1.0.0/eon.css"/>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
     <style>
       body {
@@ -16,8 +18,6 @@
         width:100%;
       }
     </style>
-    <script type="text/javascript" src="https://pubnub.github.io/eon/v/eon/1.0.0/eon.js"></script>
-    <link type="text/css" rel="stylesheet" href="https://pubnub.github.io/eon/v/eon/1.0.0/eon.css"/>
   </head>
   <body>
     <div id='map'></div>
@@ -33,25 +33,25 @@
         mbToken: 'pk.eyJ1IjoiaWFuamVubmluZ3MiLCJhIjoiZExwb0p5WSJ9.XLi48h-NOyJOCJuu1-h-Jg',
         mbId: 'ianjennings.l896mh2e',
         channels: [channel],
-        connect: connect,
+        connect: must.rsvp,
         options: {
           zoomAnimation: false,
         },
       });
-      msg = {};
-      count = 0;
-      function connect() {
+        var msg;
         must.Rsvps(function(rsvp) {
-          lat = rsvp.venue.lat;
-          lon = rsvp.venue.lon;
-          pubnub.publish({
-            channel: channel,
-            message: [
-              {"latlng":[lat,lon]},
-            ]
-          });
+          var lat = rsvp.venue.lat;
+          var lon = rsvp.venue.lon;
+          var country = rsvp.group.group_country;
+          if(country == "us") {
+            pubnub.publish({
+              channel: channel,
+              message: [
+                {"latlng":[lat,lon]},
+              ]
+            });
+          }
         });
-      };
     </script>
   </body>
 </html>
