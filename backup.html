@@ -18,23 +18,14 @@
 
     <script type="text/javascript" src="https://pubnub.github.io/eon/v/eon/1.0.0/eon.js"></script>
     <link type="text/css" rel="stylesheet" href="https://pubnub.github.io/eon/v/eon/1.0.0/eon.css"/>
-    <script src="components/jquery/jquery.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
     <script src="components/must/must.js"></script>
   </head>
   <body>
     <div id='map'></div>
-    <!-- <script>
-      function getNonZeroRandomNumber(){
-        var random = Math.floor(Math.random()*199) - 99;
-        if(random==0) return getNonZeroRandomNumber();
-        return random;
-      }
-    </script> -->
     <script>
       L.RotatedMarker = L.Marker.extend({
-
       });
-
       var pubnub = new PubNub({
         publishKey : 'pub-c-fdf9f9d6-3550-4e76-b229-1a9f8a4a157d',
         subscribeKey : 'sub-c-28ee9c4c-f077-11e6-9032-0619f8945a4f'
@@ -57,7 +48,7 @@
             iconSize: [30, 30]
           })
           });
-        //marker.bindPopup('Route ');
+        marker.bindPopup(" Participant: " + name + " " + "Event: " + eve);
         return marker;
         }
       });
@@ -70,9 +61,10 @@
         must.Rsvps(function(rsvp) {
           var lat = rsvp.venue.lat;
           var lon = rsvp.venue.lon;
-          var city = rsvp.group.group_city;
+          city = rsvp.group.group_city;
+          name = rsvp.member.member_name;
+          eve = rsvp.group.group_name;
           var country = rsvp.group.group_country;
-          console.log(country);
           if(country === "us") {
             console.log(incr++);
             var new_point = JSON.parse(JSON.stringify(point));
