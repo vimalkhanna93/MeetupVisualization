@@ -1,10 +1,6 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <script src="components/jquery/jquery.min.js"></script>
-    <script src="components/must/must.js"></script>
-    <script type="text/javascript" src="https://pubnub.github.io/eon/v/eon/1.0.0/eon.js"></script>
-    <link type="text/css" rel="stylesheet" href="https://pubnub.github.io/eon/v/eon/1.0.0/eon.css"/>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
     <style>
       body {
@@ -18,40 +14,59 @@
         width:100%;
       }
     </style>
+
+    <script type="text/javascript" src="https://pubnub.github.io/eon/v/eon/1.0.0/eon.js"></script>
+    <link type="text/css" rel="stylesheet" href="https://pubnub.github.io/eon/v/eon/1.0.0/eon.css"/>
+    <script src="components/jquery/jquery.min.js"></script>
+    <script src="components/must/must.js"></script>
   </head>
   <body>
     <div id='map'></div>
     <script>
+      function getNonZeroRandomNumber(){
+        var random = Math.floor(Math.random()*199) - 99;
+        if(random==0) return getNonZeroRandomNumber();
+        return random;
+      }
+    </script>
+    <script>
+
       var pubnub = new PubNub({
         publishKey : 'pub-c-fdf9f9d6-3550-4e76-b229-1a9f8a4a157d',
         subscribeKey : 'sub-c-28ee9c4c-f077-11e6-9032-0619f8945a4f'
       });
-      var channel = 'pubnub-mapbox';
+      var channel = 'pubnub-mapbox' + getNonZeroRandomNumber();
       eon.map({
         pubnub: pubnub,
         id: 'map',
         mbToken: 'pk.eyJ1IjoiaWFuamVubmluZ3MiLCJhIjoiZExwb0p5WSJ9.XLi48h-NOyJOCJuu1-h-Jg',
         mbId: 'ianjennings.l896mh2e',
         channels: [channel],
-        connect: must.rsvp,
+        connect: connect,
         options: {
           zoomAnimation: false,
         },
       });
-        var msg;
+      function connect() {
+        var point = {
+          latlng: [37.370375, -97.756138]
+        };
         must.Rsvps(function(rsvp) {
           var lat = rsvp.venue.lat;
           var lon = rsvp.venue.lon;
           var country = rsvp.group.group_country;
           if(country == "us") {
+            var new_point = JSON.parse(JSON.stringify(point));
+            new_point.latlng = [lat,lon];
+            var o = {};
+            o[Math.random()] = new_point;
             pubnub.publish({
               channel: channel,
-              message: [
-                {"latlng":[lat,lon]},
-              ]
+              message: o
             });
           }
-        });
+      });
+      };
     </script>
   </body>
 </html>
