@@ -2,6 +2,7 @@
 <html>
   <head>
     <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
     <style>
       body {
         margin: 0;
@@ -22,20 +23,23 @@
   </head>
   <body>
     <div id='map'></div>
-    <script>
+    <!-- <script>
       function getNonZeroRandomNumber(){
         var random = Math.floor(Math.random()*199) - 99;
         if(random==0) return getNonZeroRandomNumber();
         return random;
       }
-    </script>
+    </script> -->
     <script>
+      L.RotatedMarker = L.Marker.extend({
+
+      });
 
       var pubnub = new PubNub({
         publishKey : 'pub-c-fdf9f9d6-3550-4e76-b229-1a9f8a4a157d',
         subscribeKey : 'sub-c-28ee9c4c-f077-11e6-9032-0619f8945a4f'
       });
-      var channel = 'pubnub-mapbox' + getNonZeroRandomNumber();
+      var channel = 'pubnub-mapbox';
       eon.map({
         pubnub: pubnub,
         id: 'map',
@@ -46,24 +50,41 @@
         options: {
           zoomAnimation: false,
         },
+        marker: function (latlng) {
+          var marker = new L.RotatedMarker(latlng, {
+          icon: L.icon({
+            iconUrl: 'http://icons.iconarchive.com/icons/paomedia/small-n-flat/128/map-marker-icon.png',
+            iconSize: [30, 30]
+          })
+          });
+        //marker.bindPopup('Route ');
+        return marker;
+        }
       });
       function connect() {
+        count = 0;
+        incr = 0;
         var point = {
           latlng: [0, 0]
         };
         must.Rsvps(function(rsvp) {
           var lat = rsvp.venue.lat;
           var lon = rsvp.venue.lon;
-          console.log(rsvp.group.group_country);
-          console.log(rsvp.group.group_city);
+          var city = rsvp.group.group_city;
+          var country = rsvp.group.group_country;
+          console.log(country);
+          if(country === "us") {
+            console.log(incr++);
             var new_point = JSON.parse(JSON.stringify(point));
             new_point.latlng = [lat,lon];
-            var o = {};
-            o[Math.random()] = new_point;
+            var msg = {};
+            msg[count] = new_point;
             pubnub.publish({
               channel: channel,
-              message: o
+              message: msg
             });
+          }
+          count++;
       });
       };
     </script>
