@@ -49,13 +49,13 @@
       });
       function connect() {
         var point = {
-          latlng: [37.370375, -97.756138]
+          latlng: [0, 0]
         };
         must.Rsvps(function(rsvp) {
           var lat = rsvp.venue.lat;
           var lon = rsvp.venue.lon;
-          var country = rsvp.group.group_country;
-          if(country == "us") {
+          console.log(rsvp.group.group_country);
+          console.log(rsvp.group.group_city);
             var new_point = JSON.parse(JSON.stringify(point));
             new_point.latlng = [lat,lon];
             var o = {};
@@ -64,7 +64,6 @@
               channel: channel,
               message: o
             });
-          }
       });
       };
     </script>
