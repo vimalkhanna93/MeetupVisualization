@@ -16,19 +16,12 @@
         width:100%;
       }
     </style>
-
     <script type="text/javascript" src="https://pubnub.github.io/eon/v/eon/1.0.0/eon.js"></script>
     <link type="text/css" rel="stylesheet" href="https://pubnub.github.io/eon/v/eon/1.0.0/eon.css"/>
   </head>
   <body>
     <div id='map'></div>
     <script>
-      var count = 0;
-      must.Rsvps(function(rsvp) {
-        if(typeof rsvp.venue.lat !== 'undefined' && typeof rsvp.venue.lon !== 'undefined') {
-          connect();
-        }
-      });
       var pubnub = new PubNub({
         publishKey : 'pub-c-fdf9f9d6-3550-4e76-b229-1a9f8a4a157d',
         subscribeKey : 'sub-c-28ee9c4c-f077-11e6-9032-0619f8945a4f'
@@ -45,20 +38,19 @@
           zoomAnimation: false,
         },
       });
+      msg = {};
+      count = 0;
       function connect() {
-        setInterval(function(){
+        must.Rsvps(function(rsvp) {
           lat = rsvp.venue.lat;
           lon = rsvp.venue.lon;
-          city = rsvp.group.group_city;
-          console.log(count++);
-          console.log(city);
           pubnub.publish({
             channel: channel,
             message: [
               {"latlng":[lat,lon]},
             ]
           });
-        },500);
+        });
       };
     </script>
   </body>
