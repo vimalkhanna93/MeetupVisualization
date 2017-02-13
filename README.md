@@ -1,5 +1,5 @@
 =================================================================================================
-Data Visualization for RSVPs made in meetup community using PubNub JavaScript API and Eon gio map
+Data Visualization for RSVPs made in meetup community using PubNub JavaScript API and map framework for realtime data
 =================================================================================================
 
 This is a simple application which displays RSVPs made for any event by members of meetup groups from all over the world. 
