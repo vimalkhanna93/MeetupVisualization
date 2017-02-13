@@ -14,9 +14,10 @@ Steps to run the application:
 1. Clone or download the application
 2. Run the index.html file in any of the browser. (I have entered my publish key and subscribekey in the html page)
 
-
+-----
 Note: 
-1. Since for the test purpose I directly entered my publishkey and subscribekey in the github which is usually wrong. Always the keys should be private. 
+-----
+1. Since for the test purpose I directly entered my publishkey and subscribekey in the github which is usually wrong. Always    the keys should be private. 
 2. You can compare the RSVPs in the following link - http://meetup.github.io/stream/rsvpTicker/
 
 Screenshot:
