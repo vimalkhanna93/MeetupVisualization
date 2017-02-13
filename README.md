@@ -16,4 +16,4 @@ Steps to run the application:
 
 
 Note: 
-1. Since for the test purpose I directly entered my publishkey and subscribekey in the github which is usually wrong. Always the keys should be private. 
+Since for the test purpose I directly entered my publishkey and subscribekey in the github which is usually wrong. Always the keys should be private. 
