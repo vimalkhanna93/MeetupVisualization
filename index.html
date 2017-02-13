@@ -63,16 +63,15 @@
           name = rsvp.member.member_name;
           eve = rsvp.group.group_name;
           city = rsvp.group.group_city;
-            console.log(incr++);
-            var new_point = JSON.parse(JSON.stringify(point));
-            new_point.latlng = [lat,lon];
-            var msg = {};
-            msg[count] = new_point;
-            pubnub.publish({
-              channel: channel,
-              message: msg
-            });
-          count++;
+          var new_point = JSON.parse(JSON.stringify(point));
+          new_point.latlng = [lat,lon];
+          var msg = {};
+          msg[count] = new_point;
+          pubnub.publish({
+            channel: channel,
+            message: msg
+          });
+        count++;
       });
       };
     </script>
