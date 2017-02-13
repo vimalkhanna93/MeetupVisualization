@@ -11,9 +11,8 @@ When you click on a pin, the user who RSVP to the event and the name of the even
 -----------------------------
 Steps to run the application:
 -----------------------------
-1. Go to the github link https://github.com/vimalkhanna93/MeetupdataVisualization
-2. Clone or download the application
-3. Run the index.html file in any of the browser. (I have entered my publish key and subscribekey in the html page)
+1. Clone or download the application
+2. Run the index.html file in any of the browser. (I have entered my publish key and subscribekey in the html page)
 
 
 Note: 
