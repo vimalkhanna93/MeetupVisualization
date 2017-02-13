@@ -52,31 +52,27 @@
         }
       });
       function connect() {
-        count = 0;
-        incr = 0;
         var point = {
           latlng: [0, 0]
         };
         lat = 0, lon = 0, name = "", city = "", eve= "";
         must.Rsvps(function(rsvp) {
         if(typeof lat !== "undefined") {
-          lat = rsvp.venue.lat;
-          lon = rsvp.venue.lon;
+          var lat = rsvp.venue.lat;
+          var lon = rsvp.venue.lon;
           name = rsvp.member.member_name;
           eve = rsvp.group.group_name;
           city = rsvp.group.group_city;
-          console.log(city);
           var new_point = JSON.parse(JSON.stringify(point));
           new_point.latlng = [lat,lon];
           var msg = {};
-          msg[count] = new_point;
+          msg[Math.random()] = new_point;
           pubnub.publish({
             channel: channel,
             message: msg
           });
-        count++;
         }
-      });
+        });
       };
     </script>
   </body>
