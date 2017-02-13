@@ -47,7 +47,7 @@
             iconSize: [30, 30]
           })
           });
-        marker.bindPopup(" Participant: " + name + ", " + "Event: " + eve + ", " + "City: " + city);
+        marker.bindPopup(" Participant: " + name + ", " + "Event: " + eve + ", " + "Event City: " + city);
         return marker;
         }
       });
@@ -55,22 +55,22 @@
         var point = {
           latlng: [0, 0]
         };
-        lat = 0, lon = 0, name = "", city = "", eve= "";
+        lat = 0, lon = 0, name = null, city = null, eve= null;
+        msg = {};
         must.Rsvps(function(rsvp) {
-        if(typeof lat !== "undefined") {
-          var lat = rsvp.venue.lat;
-          var lon = rsvp.venue.lon;
-          name = rsvp.member.member_name;
-          eve = rsvp.group.group_name;
-          city = rsvp.group.group_city;
-          var new_point = JSON.parse(JSON.stringify(point));
-          new_point.latlng = [lat,lon];
-          var msg = {};
-          msg[Math.random()] = new_point;
-          pubnub.publish({
-            channel: channel,
-            message: msg
-          });
+        if(rsvp.venue) {
+            lat = rsvp.venue.lat;
+            lon = rsvp.venue.lon;
+            name = rsvp.member.member_name;
+            eve = rsvp.group.group_name;
+            city = rsvp.group.group_city;
+            var new_point = new Object();
+            new_point.latlng = [lat,lon];
+            msg[Math.random()] = new_point;
+            pubnub.publish({
+              channel: channel,
+              message: msg
+            });
         }
         });
       };
