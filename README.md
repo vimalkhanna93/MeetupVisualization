@@ -1,4 +1,3 @@
-=================================================================================================
 Data Visualization for RSVPs made in meetup community using PubNub JavaScript API and map framework for realtime data
 =================================================================================================
 
